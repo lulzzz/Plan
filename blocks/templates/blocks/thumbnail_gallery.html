@@ -1,0 +1,33 @@
+{% extends 'blocks/base.html' %}
+
+{% block content %}
+
+<div class="action_button_container load-js-controller">
+
+{% if 'message' not in context_dict %}
+
+<div class="thumbnail">
+    <div class="padding-small">
+        <div class="row">
+        {% for item in context_dict.image_list %}
+            <img src="{{ IMAGE_URL }}{{ item.reference }}" class="img-thumbnail" alt="{{ item.label }}">
+        {% endfor %}
+        </div>
+    </div>
+
+    {% if context_dict.zip_file %}
+    <div class="caption margin_top_very_small center-block">
+        <p class="margin_top_very_small">
+            <a href="{{ context_dict.zip_file }}" class="btn btn-primary" role="button" target="_blank">Download</a>
+        </p>
+    </div>
+    {% endif %}
+</div>
+
+{% else %}
+{% include 'blocks/message.html' %}
+{% endif %}
+
+</div>
+
+{% endblock %}

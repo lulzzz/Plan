@@ -1,0 +1,28 @@
+{% extends 'architecture/base.html' %}
+{% load staticfiles %}
+
+{% block title %}Status code {{ context.status_code }}{% endblock %}
+
+{% block css %}
+{% include 'embedded/load_css_lib.html' %}
+<link rel="stylesheet" href="{{ CSS_URL }}application_structure.css">
+<link rel="stylesheet" href="{{ CSS_URL }}overwritten.css">
+<link rel="stylesheet" href="{{ CSS_URL }}error_page.css">
+{% endblock %}
+
+
+{% block body %}
+<div class="container body">
+    <div class="main_container">
+        <div class="col-md-12">
+            <div class="col-middle">
+                <div class="text-center text-center">
+                    <h1 class="error-number">{{ context.status_code  }}</h1>
+                    <h2>{{ context.h2 }}</h2>
+                    <p>{{ context.p }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

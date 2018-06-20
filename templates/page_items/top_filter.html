@@ -1,0 +1,35 @@
+{% if brand.filter_list %}
+<form method="post" class="">
+    {% csrf_token %}
+
+    {% for filter in brand.filter_list %}
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="form-group">
+            <label for="{{ filter.label }}">{{ filter.label }}</label>
+            <select class="form-control" name="{{ filter.name }}">
+                {% for k, v in filter.data.items %}
+                <option
+                    value="{{ k }}"
+                    {% if k == filter.preselect %} {% endif %}
+                >
+                    {{ v }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    {% endfor %}
+
+    <div class="col-md-1 col-sm-2 col-xs-6">
+        <div class="form-group">
+            <label>.</label>
+            <!-- <span class=" fa fa-retweet"></span> -->
+            <button
+                class="filter_change btn btn-default form-control page_reload"
+                url="{{ brand.filter_button.url }}"
+            >{{ brand.filter_button.label }}</button>
+        </div>
+    </div>
+
+</form>
+{% endif %}

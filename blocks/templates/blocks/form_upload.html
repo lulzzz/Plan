@@ -1,0 +1,7 @@
+{% extends 'blocks/base.html' %}
+
+{% block content %}
+<form class="dropzone load-js-controller">
+    {% csrf_token %}
+</form>
+{% endblock %}

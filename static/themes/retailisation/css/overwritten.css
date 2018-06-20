@@ -1,0 +1,51 @@
+/* PivotJS */
+
+.hide_totals .pvtTotal, .hide_totals .pvtTotalLabel, .hide_totals .pvtGrandTotal {
+    display: none;
+}
+
+
+/* Bootstrap forms */
+input[type="checkbox"].form-control{
+    width: auto;
+    box-shadow: none;
+}
+
+/* Datatable */
+table.dataTable thead .sorting::after, table.dataTable thead .sorting_asc::after, table.dataTable thead .sorting_desc::after  {
+    content: none !important;
+}
+
+.dataTables_wrapper {
+    margin-bottom: 30px;
+}
+
+.dropdown-menu > .active > a, .dropdown-menu > .active > a:focus, .dropdown-menu > .active > a:hover {
+    background-color: #2A3F54;
+}
+
+.search-bar-group .bc-wrapper, .search-bar-group #search, ul.ui-autocomplete{
+    width: 400px;
+    z-index: 10000;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+}
+
+.ui-autocomplete-term{
+    font-weight: bold;
+    color: #af1b34;
+}
+
+.ui-autocomplete-type{
+    font-style: italic;
+}
+
+.ui-state-active,.ui-widget-content .ui-state-active,
+.ui-widget-header .ui-state-active,
+a.ui-button:active,.ui-button:active,
+.ui-button.ui-state-active:hover{
+    background: #2A3F54;
+    border-color: #172D44;
+    color: #E7E7E7;
+}

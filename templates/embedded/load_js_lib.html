@@ -1,0 +1,140 @@
+{% load staticfiles %}
+
+{% if 'jquery' in embedded_lib %}
+<!-- jQuery -->
+<script type="text/javascript" src="{% static 'core/vendors/jquery/dist/jquery.min.js' %}"></script>
+{% endif %}
+
+{% if 'jquery-ui' in embedded_lib %}
+<!-- jQuery UI -->
+<script type="text/javascript" src="{% static 'core/vendors/jquery-ui/jquery-ui.min.js' %}"></script>
+{% endif %}
+
+{% if 'moment' in embedded_lib %}
+<!-- Moment -->
+<script type="text/javascript" src="{% static 'core/vendors/moment/min/moment.min.js' %}"></script>
+{% endif %}
+
+{% if 'boostrap' in embedded_lib %}
+<!-- Bootstrap -->
+<script type="text/javascript" src="{% static 'core/vendors/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+{% endif %}
+
+{% if 'fastclick' in embedded_lib %}
+<!-- FastClick -->
+<script type="text/javascript" src="{% static 'core/vendors/fastclick/lib/fastclick.js' %}"></script>
+{% endif %}
+
+{% if 'nprogress' in embedded_lib %}
+<!-- NProgress -->
+<script type="text/javascript" src="{% static 'core/vendors/nprogress/nprogress.js' %}"></script>
+<script type="text/javascript" src="{% static 'core/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js' %}"></script>
+{% endif %}
+
+<!-- Session security -->
+{% if 'session_security' in embedded_lib %}
+<script type="text/javascript" src="{% static 'core/vendors/Django-session-security/script.js' %}"></script>
+{% endif %}
+
+{% if 'validator' in embedded_lib %}
+<!-- Form validator -->
+<script type="text/javascript" src="{% static 'core/vendors/validator/validator.js' %}"></script>
+{% endif %}
+
+{% if 'dropzone' in embedded_lib %}
+<!-- Dropzone.js -->
+<script type="text/javascript" src="{% static 'core/vendors/dropzone/dist/min/dropzone.min.js' %}"></script>
+{% endif %}
+
+{% if 'chart' in embedded_lib %}
+<!-- Chart.js -->
+<script type="text/javascript" src="{% static 'core/vendors/chart/dist/Chart.min.js' %}"></script>
+{% endif %}
+
+{% if 'gauge' in embedded_lib %}
+<!-- gauge.js -->
+<script type="text/javascript" src="{% static 'core/vendors/gauge/dist/gauge.min.js' %}"></script>
+{% endif %}
+
+{% if 'worldmap' in embedded_lib %}
+<!-- JQVMap -->
+<script type="text/javascript" src="{% static 'core/vendors/jqvmap/dist/jquery.vmap.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'core/vendors/jqvmap/dist/maps/jquery.vmap.world.js' %}"></script>
+{% endif %}
+
+{% if 'handsontable' in embedded_lib %}
+<!-- HandsonTable -->
+<script type="text/javascript" src="{% static 'core/vendors/handsontable/dist/handsontable.full.min.js' %}"></script>
+{% endif %}
+
+{% if 'handsontable_pro' in embedded_lib %}
+<!-- HandsonTable -->
+<script type="text/javascript" src="{% static 'core/vendors/handsontable-pro/dist/handsontable.full.min.js' %}"></script>
+{% endif %}
+
+{% if 'datatables' in embedded_lib %}
+<!-- Datatables -->
+<script type="text/javascript" src="{% static 'core/vendors/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'core/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'core/vendors/datatables.net-buttons/js/dataTables.buttons.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'core/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'core/vendors/datatables.net-buttons/js/buttons.flash.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'core/vendors/datatables.net-buttons/js/buttons.html5.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'core/vendors/datatables.net-buttons/js/buttons.print.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'core/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'core/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'core/vendors/datatables.net-responsive/js/dataTables.responsive.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'core/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js' %}"></script>
+<script type="text/javascript" src="{% static 'core/vendors/datatables.net-scroller/js/dataTables.scroller.min.js' %}"></script>
+<!-- <script type="text/javascript" src="{% static 'core/vendors/jszip/dist/jszip.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'core/vendors/pdfmake/build/pdfmake.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'core/vendors/pdfmake/build/vfs_fonts.js' %}"></script> -->
+<script type="text/javascript" src="{% static 'core/vendors/iCheck/icheck.min.js' %}"></script>
+{% endif %}
+
+{% if 'daterangepicker' in embedded_lib %}
+<!-- daterangepicker -->
+<script type="text/javascript" src="{% static 'core/vendors/bootstrap-daterangepicker/daterangepicker.js' %}"></script>
+{% endif %}
+
+{% if 'selectpicker' in embedded_lib %}
+<!-- selectpicker and tokenfield -->
+<script type="text/javascript" src="{% static 'core/vendors/bootstrap-select/dist/js/bootstrap-select.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'core/vendors/bootstrap-tokenfield/dist/bootstrap-tokenfield.min.js' %}"></script>
+{% endif %}
+
+{% if 'pivottable' in embedded_lib %}
+<!-- pivottable -->
+<script type="text/javascript" src="{% static 'core/vendors/pivottable-master/dist/jquery.ui.touch-punch.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'core/vendors/pivottable-master/dist/pivot.min.js' %}"></script>
+{% endif %}
+
+{% if 'c3' in embedded_lib %}
+<!-- c3 -->
+<script type="text/javascript" src="{% static 'core/vendors/c3/d3.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'core/vendors/c3/c3.min.js' %}"></script>
+{% endif %}
+
+{% if 'jstree' in embedded_lib %}
+<!-- jstree -->
+<script type="text/javascript" src="{% static 'core/vendors/jstree/dist/jstree.min.js' %}"></script>
+{% endif %}
+
+{% if 'login' in embedded_lib %}
+<!-- login -->
+<script type="text/javascript" src="{% static 'core/vendors/bootstrap-backstretch/jquery.backstretch.min.js' %}"></script>
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+	<script src="{% static 'core/vendors/ie/html5shiv.js' %}"></script>
+	<script src="{% static 'core/vendors/ie/respond.min.js' %}"></script>
+<![endif]-->
+<!--[if lt IE 10]>
+	<script src="{% static 'core/vendors/ie/placeholder.js' %}"></script>
+<![endif]-->
+{% endif %}
+
+{% if 'function_library' in embedded_lib %}
+<!-- Custom JS libraries -->
+<script type="text/javascript" src="{% static 'core/custom/function_library.js' %}"></script>
+<script type="text/javascript" src="{% static 'core/custom/control_library.js' %}"></script>
+{% endif %}

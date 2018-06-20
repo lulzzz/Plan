@@ -1,0 +1,166 @@
+{% extends 'blocks/base.html' %}
+{% load custom_filters %}
+{% load humanize %}
+
+{% block content %}
+
+{% if context_dict.header_list %}
+
+{% if context_dict.bulk_action %}
+<div class="iCheck_action load-js-controller" type="{{ context_dict.bulk_action }}">
+{% endif %}
+
+<form method="post" class="">
+    {% csrf_token %}
+
+    <table
+        class="table table-striped table-bordered {% if context_dict.is_datatable %}datatable load-js-controller{% endif %}"
+        {% if context_dict.tfoot %}tfoot="{{ context_dict.tfoot }}"{% endif %}
+        page_length="{{ context_dict.page_length }}"
+    >
+        <thead>
+            <tr>
+                {% if context_dict.bulk_action == 'checkbox' %}
+                <th>
+    	            <input type="checkbox" class="flat check-all" />
+    		    </th>
+                {% endif %}
+
+                {% for item in context_dict.header_list %}
+                <th>{{ item }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        {% if context_dict.tfoot %}
+        <tfoot>
+            <tr>
+                {% for item in context_dict.header_list %}
+                <th></th>
+                {% endfor %}
+            </tr>
+        </tfoot>
+        {% endif %}
+        <tbody class="table_read_tbody">
+            {% for row in context_dict.data_list %}
+            <tr {% if row.0 == 'highlight' %}style="background-color: rgb(198, 152, 152); color: #744545;"{% endif %}>
+
+                {% for col in row %}
+
+                {% if context_dict.format_list|index:forloop.counter0 != 'skip' %}
+                <td>
+                    {% if col is not None %}
+
+                        {% if context_dict.format_list %}
+
+                            {% if context_dict.format_list|index:forloop.counter0 == 'strong' %}
+                                <strong>{{ col }}</strong>
+
+                            {% elif context_dict.format_list|index:forloop.counter0 == 'input_key' %}
+                                <strong>{{ col }}</strong><input type="hidden" name="{{ context_dict.form_field_list|index:forloop.counter0 }}" value="{{ col }}" />
+
+                            {% elif context_dict.format_list|index:forloop.counter0 == 'input_intcomma' %}
+                                <input type="text" name="{{ context_dict.form_field_list|index:forloop.counter0 }}" value="{{ col|intcomma }}" />
+
+                            {% elif context_dict.format_list|index:forloop.counter0 == 'input_intcomma_rounding0' %}
+                                <input type="text" name="{{ context_dict.form_field_list|index:forloop.counter0 }}" value="{{ col|intcomma_rounding0 }}" />
+
+                            {% elif context_dict.format_list|index:forloop.counter0 == 'input_currencyeur' %}
+                                <input type="text" name="{{ context_dict.form_field_list|index:forloop.counter0 }}" value="EUR {{ col|intcomma }}" />
+
+                            {% elif context_dict.format_list|index:forloop.counter0 == 'input_percentagecomma' %}
+                                <input type="text" name="{{ context_dict.form_field_list|index:forloop.counter0 }}" value="{{ col|percentagemultiplied }}" />
+
+                            {% elif context_dict.format_list|index:forloop.counter0 == 'checkbox' %}
+                                <input
+                                    type="checkbox"
+                                    class="flat"
+                                />
+                            {% elif context_dict.format_list|index:forloop.counter0 == 'radiobox' %}
+                                <input
+                                    id="{{ col.id }}"
+                                    value="{{ col.url }}"
+                                    name="{{ col.url_pk }}"
+                                    {% if col.is_selected %}checked{% endif %}
+                                    type="radio"
+                                    class="flat"
+                                />
+
+                            {% elif context_dict.format_list|index:forloop.counter0 == 'intcomma' %}
+                                {{ col|intcomma_rounding2 }}
+
+                            {% elif context_dict.format_list|index:forloop.counter0 == 'intcomma_rounding0' %}
+                                {{ col|intcomma_rounding0 }}
+
+                            {% elif context_dict.format_list|index:forloop.counter0 == 'percentagecomma' %}
+                                {{ col|percentagecomma }}
+
+                            {% elif context_dict.format_list|index:forloop.counter0 == 'percentagemultiplied' %}
+                                {{ col|percentagemultiplied }}
+
+                            {% elif context_dict.format_list|index:forloop.counter0 == 'currencyeur' %}
+                                EUR {{ col|intcomma_rounding2 }}
+
+                            {% elif context_dict.format_list|index:forloop.counter0 == 'currencyusd' %}
+                                USD {{ col|intcomma_rounding2 }}
+
+                            {% elif context_dict.format_list|index:forloop.counter0 == 'datetime' %}
+                                {{ col|date:'Y-m-d h:i a' }}
+
+                            {% elif context_dict.format_list|index:forloop.counter0 == 'date' %}
+                                {{ col|date:'Y-m-d' }}
+
+                            {% elif context_dict.format_list|index:forloop.counter0 == 'time' %}
+                                {{ col|date:'h:i a' }}
+
+                            {% elif context_dict.format_list|index:forloop.counter0 == 'image_link' %}
+                                <a current_page_name="search_tab" class="menu_control_link" name="{{ col.name }}" menu_item="{{ col.menu_item }}" href="{{ col.link }}">
+                                    <img style="height: 60px;" src="{{ IMAGE_URL }}{{ col.image }}" alt="..." class="img-thumbnail" />
+                                </a>
+
+                            {% elif context_dict.format_list|index:forloop.counter0 == 'image_url_link' %}
+                                <a current_page_name="search_tab" class="menu_control_link" name="{{ col.name }}" menu_item="{{ col.menu_item }}" href="{{ col.link }}">
+                                    <img style="height: 60px;" src="{{ col.image_url }}" alt="..." class="img-thumbnail" />
+                                </a>
+
+                            {% elif context_dict.format_list|index:forloop.counter0 == 'link' %}
+                                <a current_page_name="search_tab" class="menu_control_link" name="{{ col.name }}" menu_item="{{ col.menu_item }}" href="{{ col.link }}">
+                                    <i class="fa fa-external-link"></i>
+                                </a>
+
+                            {% elif context_dict.format_list|index:forloop.counter0 == 'image' %}
+                                <img style="height: 60px;" src="{{ IMAGE_URL }}{{ col }}" alt="..." class="img-thumbnail" />
+
+                            {% elif context_dict.format_list|index:forloop.counter0 == 'image_url' %}
+                                <img style="height: 60px;" src="{{ col }}" alt="..." class="img-thumbnail" />
+
+                            {% elif context_dict.format_list|index:forloop.counter0 == 'boolean' %}
+                                {% if col is True %}<span class="glyphicon glyphicon-ok"></span>{% else %}<span class="glyphicon glyphicon-remove"></span>{% endif %}
+
+                            {% else %}
+                                {{ col }}
+                            {% endif %}
+
+                        {% else %}
+                            {{ col }}
+                        {% endif %}
+
+                    {% endif %}
+                </td>
+                {% endif %}
+                {% endfor %}
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</form>
+{% else %}
+{% include 'blocks/message.html' %}
+{% endif %}
+
+{% if context_dict.bulk_action %}
+</div>
+{% endif %}
+
+{% endblock %}

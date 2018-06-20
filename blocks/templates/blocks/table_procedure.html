@@ -1,0 +1,58 @@
+{% extends 'blocks/base.html' %}
+
+{% block content %}
+
+{% if context_dict.form_items %}
+<div class="alert alert-dismissible" role="alert">
+    <div class="alert_message"></div>
+</div>
+
+<table class="table table-striped table_procedure load-js-controller">
+    <thead>
+        <tr>
+            <th style="width: 1%">#</th>
+            <th style="width: 50%">Step Name</th>
+            <th style="width: 35%">Progress</th>
+            <th style="width: 11%">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in context_dict.form_items %}
+        <tr>
+            <td>{{ item.number }}</td>
+            <td>
+                <a>{{ item.label }}</a>
+                <br />
+                <small>
+                    Last run:
+                    {% if item.completion_dt %}
+                    {{ item.completion_dt|date:"D d M Y" }} {{ item.completion_dt|time:"H:i" }}
+                    {% else %}never{% endif %}
+                </small>
+            </td>
+            <td>
+                <div class="progress">
+                    <div class="progress-bar{% if item.completion_percentage == 100 %} progress-bar-success{% endif %}" role="progressbar" style="width: {{ item.completion_percentage }}%" aria-valuenow="{{ item.completion_percentage }}" aria-valuemin="0" aria-valuemax="100">
+                        {{ item.completion_percentage }}%
+                    </div>
+                </div>
+            </td>
+            <td>
+                <button
+                    name="{{ item.name }}"
+                    url="{{ item.url }}"
+                    duration="{{ item.duration }}"
+                    type="button"
+                    class="procedure_run_button btn btn-{% if item.completion_percentage == 100 %}success{% else %}default{% endif %} btn-xs">
+                    Execute
+                </button>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+{% include 'blocks/message.html' %}
+{% endif %}
+
+{% endblock %}

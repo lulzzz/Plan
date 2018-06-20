@@ -1,0 +1,37 @@
+{% extends 'blocks/base.html' %}
+
+{% block content %}
+<div class="dashboard-widget-content">
+
+    {% if context_dict.table_items %}
+    <div class="col-md-4">
+        <h4>{{ context_dict.title }}</h4>
+        <table class="countries_list">
+            <tbody>
+
+                {% if context_dict.total %}
+                <tr>
+                    <td><strong><u>Total</u></strong></td>
+                    <td class="fs15 fw700 text-right"><strong><u>{{ context_dict.total }}</u></strong></td>
+                </tr>
+                {% endif %}
+
+                {% for item in context_dict.table_items %}
+                <tr>
+                    <td>{{ item.label }}</td>
+                    <td class="fs15 fw700 text-right">{{ item.value }}</td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+
+    </div>
+    {% endif %}
+
+    <div class="col-md-{% if context_dict.table_items %}8{% else %}12{% endif %} col-sm-12 col-xs-12 margin_top_medium">
+        <div class="worldmap load-js-controller" style="height:{{ context_dict.height }}px;"></div>
+    </div>
+
+</div>
+{% endblock %}

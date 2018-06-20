@@ -1,0 +1,43 @@
+{% if brand.wizard %}
+<div class="form_wizard wizard_horizontal load-js-controller">
+    <ul class="wizard_steps">
+
+        {% for item in brand.wizard.wizard_dict_list %}
+        <li>
+            <a
+                {% if forloop.counter <= brand.wizard.wizard_position_current %}
+                class="{% if item.is_completed %}done{% else %}selected{% endif %}"
+                isdone="1"
+                rel="1"
+                {% else %}
+                class="disabled"
+                isdone="0"
+                rel="2"
+                {% endif %}
+            >
+            <span class="step_no">{{ forloop.counter }}</span>
+            <span class="step_descr">
+                {{ item.label }}<br />
+                {% if forloop.counter <= brand.wizard.wizard_position_current %}
+                <div class="pretty p-switch p-fill">
+                    <input
+                        class="pretty_checkbox page_reload"
+                        type="checkbox"
+                        url="{{ item.url_wizard }}"
+                        {% if item.is_completed %}checked="checked" disabled{% endif %}
+                    />
+                    <div class="state p-success">
+                        <label>State</label>
+                    </div>
+                </div>
+                <br />
+                <small>{{ item.completion_dt|date:'Y-m-d h:i a' }}</small>
+                {% endif %}
+            </span>
+            </a>
+        </li>
+        {% endfor %}
+
+    </ul>
+</div>
+{% endif %}

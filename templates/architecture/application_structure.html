@@ -1,0 +1,82 @@
+{% extends 'architecture/base.html' %}
+{% load staticfiles %}
+{% load session_security_tags %}
+{% load i18n l10n %}
+
+{% block title %}{{ block.super }}{% endblock %}
+
+{% block css %}
+{% include 'embedded/load_css_lib.html' %}
+<link rel="stylesheet" href="{{ CSS_URL }}application_structure.css">
+<link rel="stylesheet" href="{{ CSS_URL }}overwritten.css">
+<link rel="stylesheet" href="{{ CSS_URL }}custom.css">
+{% endblock %}
+
+{% block js %}
+{% include 'embedded/load_js_lib.html' %}
+
+{% for js in js_list %}
+<script type="text/javascript" src="{{ CORE_JS_URL }}{{ js }}.js"></script>
+{% endfor %}
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        var sessionSecurity = new yourlabs.SessionSecurity({
+            pingUrl: '{% url 'session_security_ping' %}',
+            warnAfter: {{ request|warn_after|unlocalize }},
+            expireAfter: {{ request|expire_after|unlocalize }},
+            confirmFormDiscard: "{% trans 'You have unsaved changes in a form of this page.' %}"
+        });
+    });
+</script>
+{% endblock %}
+
+{% block body %}
+<div class="container body">
+    <div class="main_container">
+        {% include 'containers/side_menu.html' %}
+        {% include 'containers/top_menu.html' %}
+
+        <!-- Dynamic page content -->
+        <div id="content" class="right_col" role="main">
+
+            <div id="loading_container_base" class="margin_top_large"></div>
+
+            <!-- Side menu containers -->
+            {% for group in side_menu_dict.groups %}
+            {% for brand in group.values %}
+            <div class="group_container container_reference" id="{% if brand.menu_item %}{{ brand.menu_item }}{% else %}{{ brand.name }}{% endif %}">
+                {% if brand.values %}
+                <div class="group_container_control load-js-controller">
+                    {% include 'page_items/top_wizard.html' %}
+                    {% include 'page_items/top_filter.html' %}
+                </div>
+                {% endif %}
+
+                {% for item in brand.values %}
+
+                {% if item.url %}
+                <div class="content_container container_reference" id="{% if item.menu_item %}{{ item.menu_item }}{% else %}{{ item.name }}{% endif %}"></div>
+                {% else %}
+                {% for sub_item in item.sub_values %}
+                <div class="content_container container_reference" id="{% if sub_item.menu_item %}{{ sub_item.menu_item }}{% else %}{{ sub_item.name }}{% endif %}"></div>
+                {% endfor %}
+                {% endif %}
+
+                {% endfor %}
+
+            </div>
+            {% endfor %}
+            {% endfor %}
+
+            <!-- Top menu containers -->
+            {% for item in settings_dropdown_list %}
+            <div class="group_container container_reference" id="{% if item.menu_item %}{{ item.menu_item }}{% else %}{{ item.name }}{% endif %}"></div>
+            {% endfor %}
+
+        </div>
+    </div>
+</div>
+
+{% include 'session_security/dialog.html' %}
+{% endblock %}

@@ -1,0 +1,62 @@
+{% if content_dict.selectpicker %}
+<div>
+    <div class="well selectpicker_container load-js-controller">
+        <h3>Filters</h3>
+
+        <form method="post">
+            {% csrf_token %}
+
+            {% for item in content_dict.selectpicker %}
+            <div class="item form-group">
+                <label for="{{ item.name }}">
+                    {{ item.label }}:
+                </label>
+
+                <div>
+                    {% if item.type == 'tokenfield' %}
+                    <div class="row">
+                        <div class="col-xs-12 col-lg-5 col-sm-5">
+                            <input
+                                name={{ item.name }}
+                                url="{{ item.url }}"
+                                type="text"
+                                class="form-control tokenfield_item "
+                            />
+                        </div>
+                    </div>
+
+                    {% elif item.type == 'daterangepicker' %}
+                    <div class="load-js-controller reportrange">
+                        <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                        <span></span>
+                        <b class="caret"></b>
+                    </div>
+
+                    {% else %}
+                    <select
+                        name={{ item.name }}
+                        type="{{ item.type }}"
+                        class="selectpicker"
+                        data-size="15"
+                        {% if item.live_search %}data-live-search="true"{% endif %}
+                        {% if item.action_box %}data-actions-box="true"{% endif %}
+                        {% if item.multiple %}multiple{% endif %}
+                    >
+                        {% for value in item.values %}
+                        <option {% if value.selected %}selected{% endif %} value="{{ value.value }}">{{ value.label }}</option>
+                        {% endfor %}
+                    </select>
+                    {% endif %}
+
+                </div>
+            </div>
+
+            {% endfor %}
+
+        </form>
+
+        <button type="submit" class="save-button filter-button btn btn-default margin_top_small">Refresh</button>
+
+    </div>
+</div>
+{% endif %}

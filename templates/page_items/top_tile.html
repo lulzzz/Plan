@@ -1,0 +1,26 @@
+{% if content_dict.top_tile_list %}
+<div class="row tile_count">
+
+    {% for item in content_dict.top_tile_list %}
+    <div class="col-md-{{ item.width }} col-sm-{{ item.width }} col-xs-6 tile_stats_count">
+        <span class="count_top">
+            <i class="fa {{ item.icon }}"></i>
+            {{ item.label }}
+        </span>
+        <div class="count">{{ item.value }}</div>
+
+        {% if item.relative_change %}
+        <span class="count_bottom">
+            <i class="{% if item.relative_change.type == 'asc' %}green{% else %}red{% endif %}">
+                <i class="fa fa-sort-{{ item.relative_change.type }}"></i>
+                {{ item.relative_change.value }}
+            </i>
+            {{ item.relative_change.text }}
+        </span>
+        {% endif %}
+
+    </div>
+    {% endfor %}
+
+</div>
+{% endif %}

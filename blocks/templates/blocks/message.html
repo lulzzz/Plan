@@ -1,0 +1,12 @@
+{% if context_dict.message %}
+<div class="form-group margin_bottom_medium">
+    <div class="col-md-9 {% if not context_dict.message.position_left %}col-md-offset-3{% endif %}">
+        <div class="alert alert-{{context_dict.message.type}} alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            {{ context_dict.message.text | safe }}
+        </div>
+    </div>
+</div>
+{% endif %}

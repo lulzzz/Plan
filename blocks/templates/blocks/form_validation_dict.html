@@ -1,0 +1,44 @@
+{% extends 'blocks/base.html' %}
+
+{% block content %}
+<form method="post" class="form-horizontal form-label-left">
+    {% csrf_token %}
+
+    {% for item in context_dict.form_items %}
+    <div class="item form-group">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="{{ item.name }}">
+            {{ item.label }}
+            {% if item.required %}<span class="required">*</span>{% endif %}
+        </label>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+            <input
+                class="form-control"
+                name="{{ item.name }}"
+                value="{% if item.value %}{{ item.value }}{% endif %}"
+                type="{% if item.type %}{{ item.type }}{% else %}text{% endif %}"
+                {% if item.required %}required="required"{% endif %}
+                {% if item.disabled %}disabled{% endif %}
+                {% if item.validate_length_range %}data-validate-length-range="{{ item.validate_length_range }}"{% endif %}
+                {% if item.validate_words %}data-validate-words="{{ item.validate_words }}"{% endif %}
+            />
+        </div>
+    </div>
+    {% endfor %}
+
+    {% include 'blocks/message.html' %}
+
+    {% if context_dict.button_list %}
+    <div class="form-group">
+        <div class="ln_solid"></div>
+        <div class="form-group">
+            {% for button in context_dict.button_list %}
+            {% if button == 'save' %}
+            <button type="submit" class="btn btn-primary save-button">Save</button>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+</form>
+{% endblock %}

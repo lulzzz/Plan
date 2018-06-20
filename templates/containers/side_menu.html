@@ -1,0 +1,91 @@
+<div class="menu_fixed col-md-3 left_col">
+    <div class="left_col scroll-view">
+
+        <div class="navbar nav_title" style="border: 0;">
+            <a href="{{ base }}" class="site_title">{{ APPLICATION_NAME }}</a>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="profile"><!--img_2 -->
+            <div class="profile_pic">
+                <img src="{{ IMAGE_URL }}company/logo.jpg" alt="..." class="img-circle profile_img">
+            </div>
+            <div class="profile_info">
+                <span>Business User</span>
+                <h2>{{ user.get_full_name|default:user.username }}</h2>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <br />
+        <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+
+            {% for group in side_menu_dict.groups %}
+            <div class="menu_section">
+
+                <h3>{{ group.name }}</h3>
+                <ul class="nav side-menu">
+
+                    {% for brand in group.values %}
+                    <li {% if focus == brand.name %}class="current-page active"{% endif %}>
+                        {% if brand.url %}
+                        <a  class="menu_control_link"
+                            name="{{ brand.name }}"
+                            href="{{ brand.url }}"
+                            {% if brand.menu_item %}menu_item="{{ brand.menu_item }}"{% endif %}
+                        >
+                        {% else %}
+                        <a>
+                        {% endif %}
+                            <i class="fa {{ brand.icon }}"></i>
+                            {{ brand.label }}
+                            {% if brand.values %}<span class="fa fa-chevron-down"></span>{% endif %}
+                        </a>
+                        {% if brand.values %}
+                        <ul class="nav child_menu">
+                            {% for item in brand.values %}
+                            <li {% if focus == item.name %}class="current-page active"{% endif %}>
+                                {% if item.url %}
+                                <a  class="menu_control_link"
+                                    name="{{ item.name }}"
+                                    href="{{ item.url }}"
+                                    {% if item.menu_item %}menu_item="{{ item.menu_item }}"{% endif %}
+                                >
+                                {% else %}
+                                <a>
+                                {% endif %}
+                                    {{ item.label }}
+                                    {% if item.sub_values %}<span class="fa fa-chevron-down"></span>{% endif %}
+                                </a>
+                                {% if item.sub_values %}
+                                <ul class="nav child_menu">
+                                    {% for sub_item in item.sub_values %}
+                                    <li {% if focus == sub_item.name %}class="current-page active"{% endif %}>
+                                        <a  class="menu_control_link sub_menu"
+                                            name="{{ sub_item.name }}"
+                                            href="{{ sub_item.url }}"
+                                            {% if sub_item.menu_item %}menu_item="{{ sub_item.menu_item }}"{% endif %}
+                                        >
+                                            {{ sub_item.label }}
+                                        </a>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                                {% endif %}
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+
+                </ul>
+            </div>
+            {% endfor %}
+
+        </div>
+
+        {% include 'page_items/footer.html' %}
+    </div>
+</div>

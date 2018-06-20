@@ -1,0 +1,12 @@
+{% if content_dict.page_reference %}
+<div class="title_right">
+    <div class="pull-right">
+        <div class="alert alert-{% if content_dict.page_reference_color %}{{ content_dict.page_reference_color }}{% else %}info{% endif %} alert-dismissible fade in" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            <strong>{{ content_dict.page_reference }}</strong>
+        </div>
+    </div>
+</div>
+{% endif %}

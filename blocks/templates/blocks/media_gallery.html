@@ -1,0 +1,52 @@
+{% extends 'blocks/base.html' %}
+
+{% block content %}
+
+<div class="image_paginator load-js-controller">
+
+{% if 'message' not in context_dict %}
+
+{% for item in context_dict %}
+{% if item.full_row %}
+<div class="col-md-12">
+{% else %}
+<div class="col-md-55 {% if item.has_zoom %}width-20-percent{% endif %}">
+{% endif %}
+    <div class="thumbnail {% if item.has_zoom %}presized-thumbnail{% endif %} {% if item.was_selected %}was_selected{% endif %}">
+
+        {% if item.reference and not item.has_zoom %}
+        <a href="{{ IMAGE_URL }}{{ item.reference }}" target="_blank">
+            <img src="{{ IMAGE_URL }}{{ item.reference }}" alt="{{ item.label }}" style="width:100%">
+        </a>
+
+        {% elif item.reference and item.has_zoom %}
+        <div class="image view view-first">
+            <img style="width: 100%; display: block;" src="{{ IMAGE_URL }}{{ item.reference }}" alt="image" />
+            <div class="mask no-caption">
+                <div class="tools tools-bottom">
+                    <a pk="{{ item.id }}"><i class="fa fa-check"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="caption">
+            <p><strong>{{ item.label }}</strong></p>
+            <p>{{ item.text }}</p>
+        </div>
+
+        {% elif item.url %}
+        <a href="{{ item.url }}" target="_blank">
+            <img src="{{ item.url }}" alt="{{ item.label }}" style="width:100%">
+        </a>
+        {% endif %}
+
+    </div>
+</div>
+{% endfor %}
+
+{% else %}
+{% include 'blocks/message.html' %}
+{% endif %}
+
+</div>
+
+{% endblock %}

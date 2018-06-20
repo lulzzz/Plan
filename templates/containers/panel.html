@@ -1,0 +1,94 @@
+<div class="col-md-{{ panel.width }} col-sm-{{ panel.width }} col-xs-12">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>
+                {{ panel.title }}
+                <small>{% if panel.subtitle %}{{ panel.subtitle }}{% endif %}</small>
+            </h2>
+
+            {% if panel.daterangepicker %}
+            <div class="filter">
+                <a class="refresh-link hidden"></a>
+                <div class="reportrange load-js-controller pull-right">
+                    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                    <span></span>
+                    <b class="caret"></b>
+                </div>
+            </div>
+            {% else %}
+            <ul class="nav navbar-right panel_toolbox">
+                <li><a class="refresh-link"><i class="fa fa-refresh"></i></a></li>
+                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+            </ul>
+            {% endif %}
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content panel_body">
+
+            {% if panel.description %}<p>{{ panel.description | safe }}</p>{% endif %}
+
+            {% include 'page_items/top_selectpicker_panel.html' %}
+
+            <div class="loading_container"></div>
+
+            <div
+                class="url_load {% if panel.hide_totals %}hide_totals{% endif %}"
+                name="{{ panel.name }}"
+                type="{{ panel.type }}"
+                url="{{ panel.url }}"
+                post_data=""
+                {% if content_dict.daterange_start %}daterange_start="{{ content_dict.daterange_start }}"{% endif %}
+                {% if content_dict.daterange_end %}daterange_end="{{ content_dict.daterange_end }}"{% endif %}
+                {% if panel.url_pk %}url_pk="{{ panel.url_pk }}"{% endif %}
+                {% if panel.url_action %}url_action="{{ panel.url_action }}"{% endif %}
+                {% if panel.url_action_helper %}url_action_helper="{{ panel.url_action_helper }}"{% endif %}
+                {% if panel.dependency_list %}dependency_list="{{ panel.dependency_list }}"{% endif %}
+                {% if panel.pivottable_cols %}pivottable_cols="{{ panel.pivottable_cols }}"{% endif %}
+                {% if panel.pivottable_rows %}pivottable_rows="{{ panel.pivottable_rows }}"{% endif %}
+                {% if panel.pivottable_vals %}pivottable_vals="{{ panel.pivottable_vals }}"{% endif %}
+                {% if panel.aggregator_name %}aggregator_name="{{ panel.aggregator_name }}"{% endif %}
+                {% if panel.renderer_name %}renderer_name="{{ panel.renderer_name }}"{% endif %}
+                {% if panel.height %}style="height:{{ panel.height }}px;" panel_height="true"{% endif %}
+                {% if panel.overflow %}style="overflow-x:{{ panel.overflow }};overflow-y:hidden;"{% endif %}
+            ></div>
+
+        </div>
+
+        {% if panel.footer %}
+        <div class="panel_footer">
+            <div class="ln_solid"></div>
+
+            {% if panel.footer.button_list %}
+            <div class="col-md-1 col-sm-3 col-xs-6">
+                <div class="form-group">
+
+                    {% for item in panel.footer.button_list %}
+                    {% if item == 'save' %}
+                    <button type="submit" class="btn btn-primary save-button" url="{{ panel.url }}">Save</button>
+                    {% endif %}
+                    {% if item == 'run' %}
+                    <button type="submit" class="btn btn-default btn-lg run-button" url="{{ panel.url }}">Run</button>
+                    {% endif %}
+                    {% endfor %}
+
+                </div>
+            </div>
+            {% endif %}
+
+            {% if panel.footer.select_name and panel.footer.select_values %}
+            <div class="col-md-3 col-sm-3 col-xs-6">
+                <div class="form-group">
+                    <select class="form-control form_select_show" name="{{ panel.footer.select_name }}">
+                        {% for k, v in panel.footer.select_values.items %}
+                        <option value="{{ k }}">{{ v }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+
+    </div>
+</div>

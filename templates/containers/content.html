@@ -1,0 +1,36 @@
+{% include 'page_items/top_tile.html' %}
+
+{% if content_dict.title %}
+<div class="page-title">
+    <div class="title_left">
+        <h1>
+            {{ content_dict.title }}
+            <small>{{ content_dict.subtitle }}</small>
+        </h1>
+    </div>
+
+    {% include 'page_items/page_reference.html' %}
+
+</div>
+<div class="clearfix"></div>
+{% endif %}
+
+<div class="filter_panels_area">
+
+    {% include 'page_items/top_selectpicker_content.html' %}
+
+    {% for panel in content_dict.panel_list %}
+    {% if panel.row_start or panel.full_row %}
+    <div class="row">
+    {% endif %}
+
+        {% include 'containers/panel.html' %}
+
+    {% if panel.row_end or panel.full_row %}
+    </div>
+    {% endif %}
+    {% endfor %}
+
+</div>
+
+{% include 'embedded/load_js_call.html' %}

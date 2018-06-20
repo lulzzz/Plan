@@ -1,0 +1,29 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+        <title>{% block title %}{{ COMPANY_NAME }} - {{ APPLICATION_NAME }}{% endblock %}</title>
+
+        <!-- Page properties -->
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="shortcut icon" type="image/png" href="{{ MEDIA_URL }}favicon.ico"/>
+
+        <!-- CSS -->
+        {% block css %}{% endblock %}
+
+    </head>
+    <body class="nav-md">
+
+        <!-- Page content -->
+        {% block body %}{% endblock %}
+
+        <!-- JS -->
+        {% block js %}{% endblock %}
+
+    </body>
+</html>

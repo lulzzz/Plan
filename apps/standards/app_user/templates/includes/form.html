@@ -1,0 +1,71 @@
+<form class="panel-form" method="post">
+    {% csrf_token %}
+
+    <table class="table table-bordered" {% if list_item.source_table %} name="{{list_item.source_table}}"{% endif %}>
+        <tbody>
+            {% for item in list_item.panel_content %}
+
+            <tr>
+                {% if item.value or list_item.panel_editable %}
+                <th class="col-xs-4 col-sm-4 col-md-4">{{item.label}}</th>
+                <td class="col-xs-8 col-sm-8 col-md-8">
+                    {% if list_item.panel_editable %}
+                    {% if item.radio_button %}
+                    <label class="switch">
+                        <input
+                            type="checkbox"
+                            name="{% if item.name %}{{ item.name }}{% endif %}"
+                            {{ item.radio_button }}
+                        >
+                        <span class="slider"></span>
+                    </label>
+                    {% else %}
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            {% if item.name in list_item.disabled_input_list %}
+                            <span class="glyphicon glyphicon-lock" />
+                            {% else %}
+                            <span class="glyphicon glyphicon-edit" />
+                            {% endif %}
+                        </span>
+                        <input
+                            type="{% if item.type %}{{ item.type }}{% else %}text{% endif %}"
+                            name="{% if item.name %}{{ item.name }}{% endif %}"
+                            class="form-control input-sm"
+                            value="{% if item.value %}{{ item.value }}{% endif %}"
+                            {% if item.mandatory %}required{% endif %}
+                            {% if item.name in list_item.disabled_input_list %}disabled{% endif %}
+                        >
+                    </div>
+                    {% endif %}
+                    {% else %}
+
+                    {% if item.value %}
+                    {% if item.name in list_item.img_list %}
+                    <img class="img-thumbnail bg-grey" width="300px" src="{{item.value}}" />
+                    {% elif item.name in list_item.link_list %}
+                    <a href="{{item.value}}" target="_blank">{{item.value}}</a>
+                    {% elif item.name in list_item.email_list %}
+                    <a href="mailto:{{item.value}}" target="_top">{{item.value}}</a>
+                    {% else %}
+                    {{item.value}}
+                    {% endif %}
+
+                    {% endif %}
+                    {% endif %}
+                </td>
+            </tr>
+
+            {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+
+</form>
+
+{% if list_item.message_dict %}
+<div class="alert alert-{{list_item.message_dict.type}} alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    {{ list_item.message_dict.text | safe }}
+</div>
+{% endif %}

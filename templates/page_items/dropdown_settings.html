@@ -1,0 +1,25 @@
+<li class="">
+    <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+    <img src="{{ IMAGE_URL }}company/logo.jpg" alt="">{{ user.get_full_name|default:user.username }}
+    <span class=" fa fa-angle-down"></span>
+    </a>
+    <ul class="dropdown-menu dropdown-usermenu pull-right">
+        {% for item in settings_dropdown_list %}
+        <li {% if focus == item.name %}class="current-page active"{% endif %}>
+            <a {% if not item.hard_link %}class="menu_control_link"{% endif %} name="{{ item.name }}" href="{{ item.url }}">
+                {% if item.icon %}
+                <i class="fa {{ item.icon }} pull-right"></i>
+                {% endif %}
+                {{ item.label }}
+            </a>
+
+        </li>
+        {% endfor %}
+        <li>
+            <a href="{% url 'logout' %}">
+                <i class="fa fa-sign-out pull-right"></i>
+                Logout
+            </a>
+        </li>
+    </ul>
+</li>

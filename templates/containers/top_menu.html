@@ -1,0 +1,24 @@
+<div class="top_nav">
+    <div class="nav_menu">
+        <nav>
+            <div class="nav toggle">
+                <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+            </div>
+
+            {% if searchbar %}
+			<div class="navbar-form navbar-left top-search">
+				<div class="input-group search-bar-group ui-widget">
+					<input id="search" url="{% url 'search_api' %}" class="form-control" placeholder="Search for anything..." type="text">
+				</div>
+            </div>
+            {% endif %}
+
+            <ul class="nav navbar-nav navbar-right">
+
+				{% include 'page_items/dropdown_settings.html' %}
+				{% include 'page_items/dropdown_notifications.html' %}
+
+            </ul>
+        </nav>
+    </div>
+</div>

@@ -1,0 +1,10 @@
+mysqlclient
+pymysql
+numpy
+pandas
+python-dateutil
+openpyxl
+ezodf
+pyunpack
+lxml
+tabula-py
