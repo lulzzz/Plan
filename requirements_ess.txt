@@ -8,3 +8,4 @@ ezodf
 pyunpack
 lxml
 tabula-py
+patool
