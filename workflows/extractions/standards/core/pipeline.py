@@ -51,13 +51,13 @@ def s01_load_extracts(
     for filename, properties in file_dict.items():
 
         # Desactivate timezone support
-        print('\nScanning', filename)
+        print('\nScanning file', '"' + filename + '.' + properties.get('extension') + '"')
 
         # Defining variables
         metadata_id = None
         cp.TEMP_SHEET_NAME = None
-        database_table_name = os_utils.rewrite_with_technical_convention('sa01_' + filename)
-        has_rule = True
+        database_table_name = os_utils.rewrite_with_technical_convention('sa01_' + filename + '_' + properties.get('extension'))
+        has_rule = add_rules
         last_modified_dt = parser.parse(properties.get('last_modified_dt'))
         creation_dt = parser.parse(properties.get('creation_dt'))
         metadata_row = pipeline_metadata_queryset.filter(filename=filename).first()

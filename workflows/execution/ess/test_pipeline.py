@@ -24,24 +24,23 @@ filename_dict = os_utils.get_file_properties(
     result_format='file_property_dict',
     extension_list=['zip', 'rar', 'tar'],
 )
-
-filename_dict = pipeline.s01_extract_from_packaged_files(filename_dict)
+pipeline.s01_extract_from_packaged_files(filename_dict)
 
 # Scan for source files that are in the allowed extraction formats
-filename_dict.update(
-    os_utils.get_file_properties(
-        folder=cp.INPUT_DIRECTORY,
-        result_format='file_property_dict',
-        # startswith='PDAS_FTW_VANS_BULK_CASA_NTB',
-        extension_list=['xlsx', 'csv', 'xls', 'json', 'xml', 'txt', 'pdf', 'ods', 'html', 'dat', 'sql', 'log'],
-    )
+filename_dict = os_utils.get_file_properties(
+    folder=cp.INPUT_DIRECTORY,
+    result_format='file_property_dict',
+    # startswith='PDAS_FTW_VANS_BULK_CASA_NTB',
+    extension_list=['csv'],
+    # extension_list=['xlsx', 'csv', 'xls', 'json', 'xml', 'txt', 'pdf', 'ods', 'html', 'dat', 'sql', 'log'],
 )
+
 
 # Load extracts into the database and record metadata
 pipeline.s01_load_extracts(
     filename_dict,
-    add_rules=True,
-    delete_rules=True,
-    add_keys=True,
+    add_rules=False,
+    delete_rules=False,
+    add_keys=False,
     reload=True,
 )

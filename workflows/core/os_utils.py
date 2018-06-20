@@ -67,7 +67,7 @@ def get_file_properties(
                 }
 
                 file_property_list.append(temp_dict)
-                file_property_dict[temp_filename] = temp_dict
+                file_property_dict[temp_filename + get_file_extension(name, keep_dot=True)] = temp_dict
                 abs_path_list.append(temp_abs_path)
                 abs_path_dict[temp_filename] = temp_abs_path
 
