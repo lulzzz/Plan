@@ -108,8 +108,8 @@ def s01_load_extracts(
 
         # Convert all columns into object type
         output_df = df_utils.convert_object_col(output_df)
-        # output_df = df_utils.convert_datetime_col(output_df)
-        # df_utils.convert_numeric_col(output_df)
+        output_df = df_utils.convert_datetime_col(output_df)
+        df_utils.convert_numeric_col(output_df)
 
         # Add filename column
         # output_df.insert(0, 'filename', os.path.basename(source_path))

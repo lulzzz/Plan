@@ -2,9 +2,10 @@ import xml.etree.ElementTree as ET
 from lxml import etree
 from collections import OrderedDict
 import copy
+import pandas as pd
 
 def iter_docs(author):
-    author_attr = author.attrib
+    # author_attr = author.attrib
     for doc in author.iterfind('.//item'):
 
         entry = OrderedDict()
@@ -21,11 +22,11 @@ def extract(source_path):
     # Read xml file
     with open(source_path, 'r') as the_file:
         xml_data = the_file
-        etree = ET.parse(xml_data, parser=parser) #create an ElementTree object
+        tree = ET.parse(xml_data, parser=parser) #create an ElementTree object
         the_file.close()
 
     # Transform to df
-    return pd.DataFrame(list(iter_docs(etree.getroot())))
+    return pd.DataFrame(list(iter_docs(tree.getroot())))
 
 # Used to generate xml, see below
 def func(row):

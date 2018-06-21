@@ -42,8 +42,11 @@ def create_df_from_source_file(
     if extension in ('xlsx', 'xls'):
         output_df = extract_from_excel.extract(source_path)
 
-    elif extension in ('csv', 'txt', 'dat', 'log'):
+    elif extension in ('txt', 'dat', 'log'):
         output_df = extract_from_csv.extract(source_path)
+
+    elif extension in ('csv'):
+        output_df = pd.concat(extract_from_csv.extract_long(source_path))
 
     elif extension in ('html'):
         output_df = extract_from_html.extract(source_path)
@@ -225,13 +228,17 @@ def convert_object_col(input_df):
     Takes a dataframe table and converts every column into object format.
     """
     table_test = input_df.head(1000)
+    output_df = copy.deepcopy(input_df)
     for col in table_test.columns:
         if all(pd.isnull(table_test[col])):
-            table_test = table_test.drop(col, 1)
-
+            # table_test = table_test.drop(col, 1)
+            del output_df[col]
     # Convert first to str (to avoid datetime64 database conversion issue)
-    output_df = table_test.astype(str)
-    return output_df.astype(object)
+    # for col in table_test.columns:
+
+    # output_df = table_test.astype(str)
+    # return output_df.astype(object)
+    return output_df
 
 
 def convert_numeric_col(table):

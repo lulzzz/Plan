@@ -31,11 +31,13 @@ filename_dict = os_utils.get_file_properties(
     folder=cp.INPUT_DIRECTORY,
     result_format='file_property_dict',
     # startswith='PDAS_FTW_VANS_BULK_CASA_NTB',
-    extension_list=['csv'],
-    # extension_list=['xlsx', 'csv', 'xls', 'json', 'xml', 'txt', 'pdf', 'ods', 'html', 'dat', 'sql', 'log'],
+    # extension_list=['csv'],
+    extension_list=['xlsx', 'csv', 'xls', 'json', 'xml', 'txt', 'pdf', 'ods', 'html', 'dat', 'sql', 'log'],
 )
 
-
+print()
+print(filename_dict)
+print()
 # Load extracts into the database and record metadata
 pipeline.s01_load_extracts(
     filename_dict,
