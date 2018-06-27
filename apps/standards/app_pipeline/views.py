@@ -38,44 +38,56 @@ class SourceExtractTable(views.TableRead):
     ]
 
 
-# class DemandChartAPI(views.ChartAPI):
-#     r'''
-#     View that provides the chart configuration and data
-#     '''
-#     # Variable definition
-#     model = models.FactDemand
-#     order_by = 'dim_date_month_xf__year_month'
-#     xaxis = 'dim_date_month_xf__year_month'
-#     chart_label = 'Volume'
-#     aggregation = 'quantity'
-#     aggregation_label = 'quantity'
-#     filter_dict = None
-#
-#     def set_filter_dict(self):
-#         # vendor
-#         if self.kwargs.get('category') == 'dim_production_line':
-#             # pk
-#             if self.kwargs.get('pk'):
-#                 self.filter_dict['dim_production_line__exact'] = self.kwargs.get('pk')
-#
-#         # product
-#         elif self.kwargs.get('category') == 'dim_product':
-#             # pk
-#             if self.kwargs.get('pk'):
-#                 self.filter_dict['dim_product_id__exact'] = self.kwargs.get('pk')
-#             # keyword
-#             elif self.kwargs.get('keyword'):
-#                 query = (Q(dim_product__is_placeholder=False) & \
-#                     (
-#                         Q(dim_product__material=self.kwargs.get('keyword')) |
-#                         Q(dim_product__material_text_short=self.kwargs.get('keyword')) |
-#                         Q(dim_product__family=self.kwargs.get('keyword')) |
-#                         Q(dim_product__group_description=self.kwargs.get('keyword'))
-#                     )
-#                 )
-#                 self.filter_dict = query
-#
-#
+class RowChartAPI(views.ChartAPI):
+    r'''
+    View that provides the chart configuration and data
+    '''
+
+    def get(self, request, format=None, **kwargs):
+        label_list = sorted(list(set(models.Metadata.objects.values_list('database_table', flat=True))), key=str.lower)
+        data_list = list()
+        for label in label_list:
+            data_list.append(models.Metadata.objects.filter(
+                database_table=label
+            ).first().row_number)
+
+        data = {
+            'labels': label_list,
+            'datasets': [
+                {
+                    'label': 'Number of Rows',
+                    'data': data_list
+                }
+            ]
+        }
+        return JsonResponse(data, safe=False)
+
+
+class ColChartAPI(views.ChartAPI):
+    r'''
+    View that provides the chart configuration and data
+    '''
+
+    def get(self, request, format=None, **kwargs):
+        label_list = sorted(list(set(models.Metadata.objects.values_list('database_table', flat=True))), key=str.lower)
+        data_list = list()
+        for label in label_list:
+            data_list.append(models.Metadata.objects.filter(
+                database_table=label
+            ).first().col_number)
+
+        data = {
+            'labels': label_list,
+            'datasets': [
+                {
+                    'label': 'Number of Columns',
+                    'data': data_list
+                }
+            ]
+        }
+        return JsonResponse(data, safe=False)
+
+
 # class DemandComboChartAPI(views.ChartAPI):
 #     r'''
 #     View that provides the chart configuration and data

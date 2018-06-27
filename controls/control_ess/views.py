@@ -35,19 +35,19 @@ class BaseView(LoginEnvironmentView, mixins_view.SecurityModelNameMixin):
                     'name': 'General',
                     'values':
                     [
-                        # {
-                        #     'name': 'dashboard_tab',
-                        #     'label': 'Dashboard',
-                        #     'icon': 'fa-dashboard',
-                        #     'url': reverse_lazy('dashboard_tab').replace('/', '#', 1),
-                        #     'values': None,
-                        # },
                         {
                             'name': 'source_tab',
                             'label': 'Source Data',
                             'icon': 'fa-database',
                             'url': reverse_lazy('source_tab').replace('/', '#', 1),
                             'values': None
+                        },
+                        {
+                            'name': 'dashboard_tab',
+                            'label': 'Visualization',
+                            'icon': 'fa-dashboard',
+                            'url': reverse_lazy('dashboard_tab').replace('/', '#', 1),
+                            'values': None,
                         },
                     ],
                 },
@@ -61,18 +61,6 @@ class BaseView(LoginEnvironmentView, mixins_view.SecurityModelNameMixin):
                 'url': reverse_lazy('user_profile_tab').replace('/', '#', 1),
                 'icon': None,
             },
-            # {
-            #     'label': 'Settings',
-            #     'name': 'settings_tab',
-            #     'url': reverse_lazy('user_profile_tab').replace('/', '#', 1),
-            #     'icon': None,
-            # },
-            # {
-            #     'label': 'Invoices',
-            #     'name': 'user_profile_tab',
-            #     'url': reverse_lazy('user_profile_tab').replace('/', '#', 1),
-            #     'icon': None,
-            # },
         ]
 
         # Add link to admin interface
@@ -109,6 +97,45 @@ class BaseView(LoginEnvironmentView, mixins_view.SecurityModelNameMixin):
         })
 
 
+class DashboardView(ContentView):
+    r"""
+    View that loads the summary dashboard
+    """
+
+    def get_context_dict(self, request):
+
+        # Overwrite variables
+        return {
+            'panel_list': [
+                # {
+                #     'full_row': True,
+                #     'title': 'Production Demand',
+                #     'subtitle': self.dim_release_comment,
+                #     'type': 'bar',
+                #     'height': 320,
+                #     'url': reverse_lazy('combochartjs'),
+                #     'url_action': reverse_lazy('latest_demand_combochart_api'),
+                #     'width': 12,
+                # },
+                # {
+                #     'full_row': True,
+                #     'title': 'Scenario Comparison',
+                #     'subtitle': 'Pivot Table',
+                #     'type': 'pivottable',
+                #     'url': reverse_lazy('pivottablejs'),
+                #     'url_action': reverse_lazy('scenario_pivottable'),
+                #     'pivottable_cols': 'scenario',
+                #     'pivottable_rows': 'XF month (user),production line',
+                #     'pivottable_vals': 'quantity (user)',
+                #     'renderer_name': 'Heatmap',
+                #     # 'hide_row_totals': True,
+                #     'width': 12,
+                #     'overflow': 'auto',
+                # },
+            ]
+        }
+
+
 class SourceView(ContentView):
     r"""
     View that loads the core product
@@ -116,21 +143,63 @@ class SourceView(ContentView):
 
     def get_context_dict(self, request):
 
-        # Extend filter
-        self.filter_dict = {'user': request.user}
+        # Get numbers from models
+        text_file_format_count = models.Metadata.objects.filter(extension__in=['txt', 'csv', 'txt', 'dat', 'log', 'json', 'xml', 'html']).count()
+        spreadsheet_file_format_count = models.Metadata.objects.filter(extension__in=['xlsx', 'xls', 'pdf', 'ods']).count()
+        database_format_count = models.Metadata.objects.filter(extension__in=['sql']).count()
 
         # Overwrite variables
         return {
-            'title': 'Source Extracts',
+            'top_tile_list': [
+                {
+                    'width': 2,
+                    'icon': 'fa-file',
+                    'label': 'Text Format Files',
+                    'value': '{:,}'.format(text_file_format_count),
+                    'relative_change': {},
+                },
+                {
+                    'width': 2,
+                    'icon': 'fa-file-excel-o',
+                    'label': 'Spreadsheet Format Files',
+                    'value': '{:,}'.format(spreadsheet_file_format_count),
+                    'relative_change': {},
+                },
+                {
+                    'width': 2,
+                    'icon': 'fa-database',
+                    'label': 'SQL Integrations',
+                    'value': '{:,}'.format(database_format_count),
+                    'relative_change': {},
+                },
+            ],
             'panel_list': [
                 {
-                    'row_start': True,
+                    'full_row': True,
                     'title': 'Metadata',
                     'subtitle': 'last modified date',
                     'text': 'Extracted from dedicated folder',
                     'type': 'table',
                     'url': reverse_lazy('metadata_table'),
                     'width': 12,
+                },
+                {
+                    'row_start': True,
+                    'title': 'Row Count',
+                    'subtitle': 'for each file',
+                    'type': 'bar',
+                    'url': reverse_lazy('chartjs'),
+                    'url_action': reverse_lazy('metadata_row_count'),
+                    'width': 6,
+                },
+                {
+                    'row_end': True,
+                    'title': 'Column Count',
+                    'subtitle': 'for each file',
+                    'type': 'bar',
+                    'url': reverse_lazy('chartjs'),
+                    'url_action': reverse_lazy('metadata_col_count'),
+                    'width': 6,
                 },
             ]
         }

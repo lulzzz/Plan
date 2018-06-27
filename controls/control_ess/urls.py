@@ -6,6 +6,9 @@ from . import views
 urlpatterns = [
     url(r'^$', views.BaseView.as_view(), name='base'),
 
+    # Dashboard
+    url(r'^dashboard_tab$', views.DashboardView.as_view(), name='dashboard_tab'),
+
     # Source data
     url(r'^source_tab$', views.SourceView.as_view(), name='source_tab'),
 

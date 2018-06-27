@@ -18,15 +18,17 @@ class Metadata(models.Model, mixins_model.ModelFormFieldNames):
 
     # File related fields
     filename = models.CharField(max_length=100)
-    rel_path = models.CharField(max_length=500)
-    abs_path = models.CharField(max_length=500)
+    rel_path = models.CharField(max_length=500, verbose_name='relative path')
+    abs_path = models.CharField(max_length=500, verbose_name='absolute path')
     extension = models.CharField(max_length=30)
     size = models.IntegerField(default=0)
-    last_modified_dt = models.DateTimeField()
+    last_modified_dt = models.DateTimeField(verbose_name='last modified date')
     last_modified_by = models.CharField(max_length=500, blank=True, null=True)
     creation_dt = models.DateTimeField(blank=True, null=True)
     created_by = models.CharField(max_length=500, blank=True, null=True)
     has_rule = models.BooleanField(default=True)
+    row_number = models.IntegerField(default=0)
+    col_number = models.IntegerField(default=0)
 
     form_field_list = [
         'database_table',
