@@ -12,6 +12,9 @@ urlpatterns = [
     # Source data
     url(r'^source_tab$', views.SourceView.as_view(), name='source_tab'),
 
+    # Master
+    url(r'^master_table_tab/(?P<item>[\w]+)$', views.MasterTableView.as_view(), name='master_table_tab'),
+
     # Profile and Settings
     url(r'^user_profile_tab$', views.ProfileView.as_view(), name='user_profile_tab'),
 ]
