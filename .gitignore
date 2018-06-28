@@ -8,7 +8,6 @@ db.sqlite3
 .DS_Store
 test.py
 *project.py
-manage.py
 vendors/
 
 #################
