@@ -147,6 +147,8 @@ def s01_load_extracts(
                 'creation_dt': creation_dt,
                 'sheet_name': cp.TEMP_SHEET_NAME,
                 'has_rule': has_rule,
+                'col_number': output_df.shape[1],
+                'row_number': output_df.shape[0],
             }
         )
 
